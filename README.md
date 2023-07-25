@@ -1,7 +1,7 @@
 <div align="center">
     <h1>Fagfolk Modal Window MVC</h1>
     <h3>
-        <a href="#">
+        <a href="https://chrisonoo.github.io/FagfolkModalWindowMVC/">
             Live demo
         </a>
         <span> | </span>
