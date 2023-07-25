@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<!-- saved from url=(0020)https://fagfolk.net/ -->
+<html lang="nb-NO" dir="ltr" class="g-offcanvas-css3">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) {
+        var href = document.location.href;
+        if (!href.match(/[?&]nowprocket/)) {if (href.indexOf('?') == -1) {if (href.indexOf('#') == -1) {document.location.href = href + '?nowprocket=1';} else {document.location.href = href.replace('#', '?nowprocket=1#');}} else {if (href.indexOf('#') == -1) {document.location.href = href + '&nowprocket=1';} else {document.location.href = href.replace('#', '&nowprocket=1#');}}}
+    }</script>
+    <script>class RocketLazyLoadScripts {
+        constructor (e) {this.triggerEvents = e, this.eventOptions = { passive: !0 }, this.userEventListener = this.triggerListener.bind(this), this.delayedScripts = { normal: [], async: [], defer: [] }, this.allJQueries = [];}
+
+        _addUserInteractionListener (e) {this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventListener, e.eventOptions)));}
+
+        _removeUserInteractionListener (e) {this.triggerEvents.forEach((t => window.removeEventListener(t, e.userEventListener, e.eventOptions)));}
+
+        triggerListener () {this._removeUserInteractionListener(this), 'loading' === document.readyState ? document.addEventListener('DOMContentLoaded', this._loadEverythingNow.bind(this)) : this._loadEverythingNow();}
+
+        async _loadEverythingNow () {this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async), await this._triggerDOMContentLoaded(), await this._triggerWindowLoad(), window.dispatchEvent(new Event('rocket-allScriptsLoaded'));}
+
+        _registerAllDelayedScripts () {document.querySelectorAll('script[type=rocketlazyloadscript]').forEach((e => {e.hasAttribute('src') ? e.hasAttribute('async') && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute('defer') && !1 !== e.defer || 'module' === e.getAttribute('data-rocket-type') ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e);}));}
+
+        async _transformScript (e) {
+            return await this._requestAnimFrame(), new Promise((t => {
+                const n = document.createElement('script');
+                let r;
+                [...e.attributes].forEach((e => {
+                    let t = e.nodeName;
+                    'type' !== t && ('data-rocket-type' === t && (t = 'type', r = e.nodeValue), n.setAttribute(t, e.nodeValue));
+                })), e.hasAttribute('src') ? (n.addEventListener('load', t), n.addEventListener('error', t)) : (n.text = e.text, t()), e.parentNode.replaceChild(n, e);
+            }));
+        }
+
+        async _loadScriptsFromList (e) {
+            const t = e.shift();
+            return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve();
+        }
+
+        _preloadAllScripts () {
+            var e = document.createDocumentFragment();
+            [...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async].forEach((t => {
+                const n = t.getAttribute('src');
+                if (n) {
+                    const t = document.createElement('link');
+                    t.href = n, t.rel = 'preload', t.as = 'script', e.appendChild(t);
+                }
+            })), document.head.appendChild(e);
+        }
+
+        _delayEventListeners () {
+            let e = {};
+
+            function t (t, n) {
+                !function (t) {
+                    function n (n) {return e[t].eventsToRewrite.indexOf(n) >= 0 ? 'rocket-' + n : n;}
+
+                    e[t] || (e[t] = { originalFunctions: { add: t.addEventListener, remove: t.removeEventListener }, eventsToRewrite: [] }, t.addEventListener = function () {arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments);}, t.removeEventListener = function () {arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments);});
+                }(t), e[t].eventsToRewrite.push(n);
+            }
+
+            function n (e, t) {
+                let n = e[t];
+                Object.defineProperty(e, t, { get: () => n || function () {}, set (r) {e['rocket' + t] = n = r;} });
+            }
+
+            t(document, 'DOMContentLoaded'), t(window, 'DOMContentLoaded'), t(window, 'load'), t(window, 'pageshow'), t(document, 'readystatechange'), n(document, 'onreadystatechange'), n(window, 'onload'), n(window, 'onpageshow');
+        }
+
+        _delayJQueryReady (e) {
+            let t = window.jQuery;
+            Object.defineProperty(window, 'jQuery', {
+                get: () => t, set (n) {
+                    if (n && n.fn && !e.allJQueries.includes(n)) {
+                        n.fn.ready = n.fn.init.prototype.ready = function (t) {e.domReadyFired ? t.bind(document)(n) : document.addEventListener('rocket-DOMContentLoaded', (() => t.bind(document)(n)));};
+                        const t = n.fn.on;
+                        n.fn.on = n.fn.init.prototype.on = function () {
+                            if (this[0] === window) {
+                                function e (e) {return e.split(' ').map((e => 'load' === e || 0 === e.indexOf('load.') ? 'rocket-jquery-load' : e)).join(' ');}
+
+                                'string' == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : 'object' == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => {delete Object.assign(arguments[0], { [e(t)]: arguments[0][t] })[t];}));
+                            }
+                            return t.apply(this, arguments), this;
+                        }, e.allJQueries.push(n);
+                    }
+                    t = n;
+                },
+            });
+        }
+
+        async _triggerDOMContentLoaded () {this.domReadyFired = !0, await this._requestAnimFrame(), document.dispatchEvent(new Event('rocket-DOMContentLoaded')), await this._requestAnimFrame(), window.dispatchEvent(new Event('rocket-DOMContentLoaded')), await this._requestAnimFrame(), document.dispatchEvent(new Event('rocket-readystatechange')), await this._requestAnimFrame(), document.rocketonreadystatechange && document.rocketonreadystatechange();}
+
+        async _triggerWindowLoad () {await this._requestAnimFrame(), window.dispatchEvent(new Event('rocket-load')), await this._requestAnimFrame(), window.rocketonload && window.rocketonload(), await this._requestAnimFrame(), this.allJQueries.forEach((e => e(window).trigger('rocket-jquery-load'))), window.dispatchEvent(new Event('rocket-pageshow')), await this._requestAnimFrame(), window.rocketonpageshow && window.rocketonpageshow();}
+
+        _handleDocumentWrite () {
+            const e = new Map;
+            document.write = document.writeln = function (t) {
+                const n = document.currentScript, r = document.createRange(), i = n.parentElement;
+                let o = e.get(n);
+                void 0 === o && (o = n.nextSibling, e.set(n, o));
+                const a = document.createDocumentFragment();
+                r.setStart(a, 0), a.appendChild(r.createContextualFragment(t)), i.insertBefore(a, o);
+            };
+        }
+
+        async _requestAnimFrame () {return new Promise((e => requestAnimationFrame(e)));}
+
+        static run () {
+            const e = new RocketLazyLoadScripts(['keydown', 'mousemove', 'touchmove', 'touchstart', 'touchend', 'wheel']);
+            e._addUserInteractionListener(e);
+        }
+    }
+
+    RocketLazyLoadScripts.run();
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="pingback" href="https://fagfolk.net/xmlrpc.php">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- This site is optimized with the Yoast SEO plugin v18.9 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>Fagfolk.net - Få jobben gjort av fagfolk som vet hva de driver med.</title>
+    <link rel="preload" as="style" href="index_files/css">
+    <link rel="stylesheet" href="index_files/css" media="all" onload="this.media=&#39;all&#39;">
+    <noscript>
+        <link rel="preload" href="https://fonts.googleapis.com/css?family=Open%20Sans&#038;display=swap" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    </noscript>
+    <meta name="description" content="Se deres fagbrev og sertifikater.Vi gir deg mulighet til å ta trygge valg. Våre tilbydere får gratis medlemsskap.">
+    <link rel="canonical" href="https://fagfolk.net/">
+    <meta property="og:locale" content="nb_NO">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fagfolk">
+    <meta property="og:description" content="Formidlings tjeneste av håndverkertjenester">
+    <meta property="og:url" content="https://fagfolk.net/">
+    <meta property="og:site_name" content="Fagfolk.net">
+    <meta property="article:modified_time" content="2022-01-08T13:50:26+00:00">
+    <meta property="og:image" content="https://fagfolk.net/wp-content/uploads/2021/08/Fagfolk-logo-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="627">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:label1" content="Ansl. lesetid">
+    <meta name="twitter:data1" content="1 minutt">
+    <script type="application/ld+json" class="yoast-schema-graph">{
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://fagfolk.net/#website",
+                "url": "https://fagfolk.net/",
+                "name": "Fagfolk.net",
+                "description": "Designed by RocketTheme",
+                "potentialAction": [
+                    {
+                        "@type": "SearchAction",
+                        "target": {
+                            "@type": "EntryPoint",
+                            "urlTemplate": "https://fagfolk.net/?s={search_term_string}"
+                        },
+                        "query-input": "required name=search_term_string"
+                    }
+                ],
+                "inLanguage": "nb-NO"
+            },
+            {
+                "@type": "ImageObject",
+                "inLanguage": "nb-NO",
+                "@id": "https://fagfolk.net/#primaryimage",
+                "url": "https://fagfolk.net/wp-content/uploads/2021/08/Fagfolk-logo-og.jpg",
+                "contentUrl": "https://fagfolk.net/wp-content/uploads/2021/08/Fagfolk-logo-og.jpg",
+                "width": 1200,
+                "height": 627
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://fagfolk.net/#webpage",
+                "url": "https://fagfolk.net/",
+                "name": "Fagfolk.net - Få jobben gjort av fagfolk som vet hva de driver med.",
+                "isPartOf": {
+                    "@id": "https://fagfolk.net/#website"
+                },
+                "primaryImageOfPage": {
+                    "@id": "https://fagfolk.net/#primaryimage"
+                },
+                "datePublished": "2015-10-16T18:13:20+00:00",
+                "dateModified": "2022-01-08T13:50:26+00:00",
+                "description": "Se deres fagbrev og sertifikater.Vi gir deg mulighet til å ta trygge valg. Våre tilbydere får gratis medlemsskap.",
+                "breadcrumb": {
+                    "@id": "https://fagfolk.net/#breadcrumb"
+                },
+                "inLanguage": "nb-NO",
+                "potentialAction": [
+                    {
+                        "@type": "ReadAction",
+                        "target": [
+                            "https://fagfolk.net/"
+                        ]
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://fagfolk.net/#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Hjem"
+                    }
+                ]
+            }
+        ]
+    }</script>
+    <!-- / Yoast SEO plugin. -->
+
+    <link rel="dns-prefetch" href="https://cdn.polyfill.io/">
+    <link href="https://fonts.gstatic.com/" crossorigin="" rel="preconnect">
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="index_files/style.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/styles.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/style.basic.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/style-curvy-red.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/lightcase.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/nucleus.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/akuatik_forsiden.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/wordpress.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/style.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/font-awesome5-all.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/font-awesome5-shim.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/akuatik-wordpress_forsiden.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/custom_forsiden.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <link rel="stylesheet" href="index_files/swiper.min.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel=&#39;stylesheet&#39;" type="text/css" media="all">
+    <script type="text/javascript" src="index_files/jquery.min.js.download" id="jquery-core-js" defer=""></script>
+    <script type="text/javascript" src="index_files/jquery-migrate.min.js.download" id="jquery-migrate-js" defer=""></script>
+    <link rel="https://api.w.org/" href="https://fagfolk.net/wp-json/">
+    <link rel="alternate" type="application/json" href="https://fagfolk.net/wp-json/wp/v2/pages/31">
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://fagfolk.net/xmlrpc.php?rsd">
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://fagfolk.net/wp-includes/wlwmanifest.xml">
+    <meta name="generator" content="WordPress 5.8.4">
+    <link rel="shortlink" href="https://fagfolk.net/">
+    <link rel="alternate" type="application/json+oembed" href="https://fagfolk.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffagfolk.net%2F">
+    <link rel="alternate" type="text/xml+oembed" href="https://fagfolk.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffagfolk.net%2F&amp;format=xml">
+
+    <!-- GA Google Analytics @ https://m0n.co/ga -->
+    <script async="" src="index_files/js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag () {dataLayer.push(arguments);}
+
+        gtag('js', new Date());
+        gtag('config', 'G-E3GX5VTQ22');
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "Fagfolk",
+            "url": "https://fagfolk.net",
+            "sameAs": [
+                "https://www.facebook.com/Fagfolk-466943003757795"
+            ],
+            "logo": "https://fagfolk.net/wp-content/uploads/2021/08/fagfolk-logo.jpg",
+            "additionalType": "http://www.productontology.org/id/Tradesman",
+            "contactPoint": [
+                {
+                    "@type": "ContactPoint",
+                    "telephone": "+47-99038002",
+                    "email": "hei@fagfolk.net",
+                    "contactType": "customer service",
+                    "availableLanguage": [
+                        "Norwegian",
+                        "English"
+                    ]
+                }
+            ]
+        }
+    </script>
+    <script>
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+    <style>
+        .no-js img.lazyload { display: none; }
+        figure.wp-block-image img.lazyloading { min-width: 150px; }
+        .lazyload, .lazyloading { opacity: 0; }
+        .lazyloaded {
+            opacity: 1;
+            transition: opacity 400ms;
+            transition-delay: 0ms;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+
+    <style>
+
+        div[id*="ajaxsearchlitesettings"].searchsettings .asl_option_inner label {
+            font-size: 0px !important;
+            color: rgba(0, 0, 0, 0);
+        }
+        div[id*="ajaxsearchlitesettings"].searchsettings .asl_option_inner label:after {
+            font-size: 11px !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .asl_w_container {
+            width: 100%;
+            margin: 0px 0px 0px 0px;
+        }
+        div[id*="ajaxsearchlite"].asl_m {
+            width: 100%;
+        }
+        div[id*="ajaxsearchliteres"].wpdreams_asl_results div.resdrg span.highlighted {
+            font-weight: bold;
+            color: rgb(217, 49, 43);
+            background-color: rgba(238, 238, 238, 1);
+        }
+        div[id*="ajaxsearchliteres"].wpdreams_asl_results .results div.asl_image {
+            width: 70px;
+            height: 70px;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        div.asl_r .results {
+            max-height: 100;
+        }
+
+        div.asl_r.asl_w.vertical .results .item::after {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            content: "";
+            height: 1px;
+            width: 100%;
+            background: #d8d8d8;
+        }
+        div.asl_r.asl_w.vertical .results .item.asl_last_item::after {
+            display: none;
+        }
+        body span.asl_single_highlighted {
+            display: inline !important;
+            color: rgba(217, 49, 43, 1) !important;
+            background-color: rgba(238, 238, 238, 1) !important;
+        }                </style>
+    <script>
+        /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+        (function (w) {
+            'use strict';
+            if (!w.loadCSS) {w.loadCSS = function () {};}
+            var rp = loadCSS.relpreload = {};
+            rp.support = (function () {
+                var ret;
+                try {ret = w.document.createElement('link').relList.supports('preload');} catch (e) {ret = !1;}
+                return function () {return ret;};
+            })();
+            rp.bindMediaToggle = function (link) {
+                var finalMedia = link.media || 'all';
+
+                function enableStylesheet () {link.media = finalMedia;}
+
+                if (link.addEventListener) {link.addEventListener('load', enableStylesheet);} else
+                    if (link.attachEvent) {link.attachEvent('onload', enableStylesheet);}
+                setTimeout(function () {
+                    link.rel = 'stylesheet';
+                    link.media = 'only x';
+                });
+                setTimeout(enableStylesheet, 3000);
+            };
+            rp.poly = function () {
+                if (rp.support()) {return;}
+                var links = w.document.getElementsByTagName('link');
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    if (link.rel === 'preload' && link.getAttribute('as') === 'style' && !link.getAttribute('data-loadcss')) {
+                        link.setAttribute('data-loadcss', !0);
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+            if (!rp.support()) {
+                rp.poly();
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener('load', function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else
+                    if (w.attachEvent) {
+                        w.attachEvent('onload', function () {
+                            rp.poly();
+                            w.clearInterval(run);
+                        });
+                    }
+            }
+            if (typeof exports !== 'undefined') {exports.loadCSS = loadCSS;} else {w.loadCSS = loadCSS;}
+        }(typeof global !== 'undefined' ? global : this));
+    </script>
+
+    <link href="index_files/wp-polyfill.min.js.download" rel="preload" as="script">
+    <link href="index_files/jquery.min.js.download" rel="preload" as="script">
+    <link href="index_files/jquery-migrate.min.js.download" rel="preload" as="script">
+    <link href="index_files/regenerator-runtime.min.js.download" rel="preload" as="script">
+    <link href="index_files/index.js.download" rel="preload" as="script">
+    <link href="index_files/simplebar.js.download" rel="preload" as="script">
+    <link href="index_files/asl-prereq.js.download" rel="preload" as="script">
+    <link href="index_files/asl-core.js.download" rel="preload" as="script">
+    <link href="index_files/asl-results-vertical.js.download" rel="preload" as="script">
+    <link href="index_files/asl-autocomplete.js.download" rel="preload" as="script">
+    <link href="index_files/asl-load.js.download" rel="preload" as="script">
+    <link href="index_files/asl-wrapper.js.download" rel="preload" as="script">
+    <link href="index_files/core.min.js.download" rel="preload" as="script">
+    <link href="index_files/lightcase.js.download" rel="preload" as="script">
+    <link href="index_files/swiper.min.js.download" rel="preload" as="script">
+    <link href="index_files/slideshow.init.js.download" rel="preload" as="script">
+    <link href="index_files/testimonials.init.js.download" rel="preload" as="script">
+    <link href="index_files/polyfill.min.js.download" rel="preload" as="script">
+    <link href="index_files/imagesloaded.pkgd.js.download" rel="preload" as="script">
+    <link href="index_files/shuffle.js.download" rel="preload" as="script">
+    <link href="index_files/team.init.js.download" rel="preload" as="script">
+    <link href="index_files/latestnews.init.js.download" rel="preload" as="script">
+    <link href="index_files/particles.js.download" rel="preload" as="script">
+    <link href="index_files/particlesjs.init.js.download" rel="preload" as="script">
+    <link href="index_files/main.js.download" rel="preload" as="script">
+    <link href="index_files/js" rel="preload" as="script">
+    <link rel="prefetch" href="https://fagfolk.net/blog/">
+</head>
+
+<body class="gantry tilt g-offcanvas-left g-home-particles g-style- home page-template-default page page-id-31 site outline-forsiden dir-ltr">
+
+<div id="g-offcanvas" data-g-offcanvas-swipe="0" data-g-offcanvas-css3="1" style="">
+    <div class="g-grid">
+
+        <div class="g-block hidden size-100">
+            <div id="mobile-menu-5013-particle" class="g-content g-particle">
+                <div id="g-mobilemenu-container" data-g-menu-breakpoint="51rem"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="g-page-surround">
+    <div class="g-menu-overlay"></div>
+    <div class="g-offcanvas-hide g-offcanvas-toggle" role="navigation" data-offcanvas-toggle="" aria-controls="g-offcanvas" aria-expanded="false">
+        <i class="fa fa-fw fa-bars"></i>
+    </div>
+
+    <section id="g-top">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div class="g-system-messages">
+                    <div id="system-message-container">
+                        <div id="system-message">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-navigation">
+        <div class="g-grid">
+
+            <div class="g-block size-15 align-right">
+                <div id="logo-3313-particle" class="g-content g-particle">
+                    <a href="https://fagfolk.net/" class="g-logo g-logo-akuatik" target="_self" title="" rel="home">
+
+                        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="100%" height="100%" viewBox="0 0 2212 580" version="1.1" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" id="svg6" sodipodi:docname="fagfolk-logo.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)"><metadata id="metadata10"><rdf:rdf><cc:work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type><dc:title></dc:title></cc:work></rdf:rdf></metadata>
+                            <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="740" inkscape:window-height="480" id="namedview8" showgrid="false" inkscape:zoom="0.13833635" inkscape:cx="1106" inkscape:cy="290" inkscape:window-x="2400" inkscape:window-y="258" inkscape:window-maximized="0" inkscape:current-layer="svg6"></sodipodi:namedview>
+                            <use id="Background" xlink:href="#_Image1" x="0" y="0" width="2212px" height="580px"></use>
+                            <defs id="defs4"><image id="_Image1" width="2212px" height="580px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACKQAAAJECAYAAAAirW6vAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzFDNzU1MTU3MkI0MTFFQkE4NEJFQTNDNkU5NTRBNzUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzFDNzU1MTY3MkI0MTFFQkE4NEJFQTNDNkU5NTRBNzUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3MUM3NTUxMzcyQjQxMUVCQTg0QkVBM0M2RTk1NEE3NSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3MUM3NTUxNDcyQjQxMUVCQTg0QkVBM0M2RTk1NEE3NSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ppp99rMAAGLeSURBVHja7N09bGRZ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"></image></defs></svg>
+
+                    </a>
+                </div>
+            </div>
+
+            <div class="g-block size-70 center nopaddingleft nopaddingright">
+                <div id="menu-6816-particle" class="g-content g-particle">
+                    <nav class="g-main-nav" data-g-hover-expand="true">
+                        <ul class="g-toplevel">
+
+                            <li class="g-menu-item g-menu-item-type-post_type g-menu-item-184 active g-standard  ">
+                                <a class="g-menu-item-container" href="https://fagfolk.net/" title="						">
+                                                                <span class="g-menu-item-content">
+                                    <span class="g-menu-item-title">Hjem</span>
+
+                    </span>
+                                </a>
+                            </li>
+
+                            <li class="g-menu-item g-menu-item-214 g-menu-item-type-post_type g-standard">
+                                <a class="g-menu-item-container" href="https://fagfolk.net/om-oss/">
+                                                                <span class="g-menu-item-content">
+                                    <span class="g-menu-item-title">Om oss</span>
+
+                    </span>
+                                </a>
+                            </li>
+
+                            <li class="g-menu-item g-menu-item-204 g-menu-item-type-post_type g-selected g-standard">
+                                <a class="g-menu-item-container" href="https://fagfolk.net/blog/">
+                                                                <span class="g-menu-item-content">
+                                    <span class="g-menu-item-title">Blogg</span>
+
+                    </span>
+                                </a>
+                            </li>
+
+                            <li class="g-menu-item g-menu-item-type-post_type g-menu-item-215 g-standard  ">
+                                <a class="g-menu-item-container" href="https://fagfolk.net/kontakt-oss/">
+                                                                <span class="g-menu-item-content">
+                                    <span class="g-menu-item-title">Kontakt oss</span>
+
+                    </span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="g-block size-15">
+                <div id="button-8399-particle" class="g-content g-particle">
+                    <div class="g-button">
+                        <a href="https://fagfolk.net/finn-fagfolk/" target="_self" class="button " title="Finn Fagfolk">
+                            Finn Fagfolk
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-slideshow" class="fp-slideshow">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="slideshow-2052-particle" class="g-content g-particle">
+                    <div id="slideshow-2052" class="g-slideshow swiper-container swiper-container-initialized swiper-container-horizontal" data-slideshow-id="slideshow-2052" data-slideshow-effect="slide" data-slideshow-autoplay="true" data-slideshow-loop="true" data-slideshow-timeout="12000" data-slideshow-speed="800" data-slideshow-touchmove="false">
+                        <div class="g-slideshow-slider swiper-wrapper" style="height: 600px; transition-duration: 0ms; transform: translate3d(-3670px, 0px, 0px);">
+                            <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" style="background-image: url(&quot;https://fagfolk.net/wp-content/themes/rt_akuatik/images/backgrounds/slideshow/bg-01.svg&quot;); background-position: center center; width: 1835px;" data-swiper-slide-index="1">
+                                <div class="slide" style="background-image: url(https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/home/slideshow/fagfolk.png); background-position: right center">
+                                    <div class="slide-content">
+                                        <h1 class="g-slideshow-main-title">
+                                            <a href="https://fagfolk.net/profiler-din-bedrift/" target="_self">Profiler din bedrift</a>
+                                        </h1>
+                                        <h3 class="g-slideshow-top-title ">
+                                            Våre tilbydere får gratis medlemsskap<br> og betaler bare for formidling.
+                                            <br>
+                                        </h3>
+                                        <a class="g-slideshow-author" href="https://fagfolk.net/profiler-din-bedrift/" target="_self">
+                                            Les mer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next" style="background-image: url(&quot;https://fagfolk.net/wp-content/themes/rt_akuatik/images/backgrounds/slideshow/bg-01.svg&quot;); background-position: center center; width: 1835px;" data-swiper-slide-index="0">
+                                <div class="slide" style="background-image: url(https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/home/slideshow/hammer.png); background-position: right bottom">
+                                    <div class="slide-content">
+                                        <h1 class="g-slideshow-main-title">
+                                            <a href="https://fagfolk.net/finn-fagfolk/" target="_self">Finn proffe fagfolk her</a>
+                                        </h1>
+                                        <h3 class="g-slideshow-top-title ">
+                                            Se deres fagbrev og sertifikater.<br>Vi gir deg mulighet til å ta trygge valg!
+                                        </h3>
+                                        <a class="g-slideshow-author" href="https://fagfolk.net/finn-fagfolk/" target="_self">
+                                            Les mer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-active" style="background-image: url(&quot;https://fagfolk.net/wp-content/themes/rt_akuatik/images/backgrounds/slideshow/bg-01.svg&quot;); background-position: center center; width: 1835px;" data-swiper-slide-index="1">
+                                <div class="slide" style="background-image: url(https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/home/slideshow/fagfolk.png); background-position: right center">
+                                    <div class="slide-content">
+                                        <h1 class="g-slideshow-main-title">
+                                            <a href="https://fagfolk.net/profiler-din-bedrift/" target="_self">Profiler din bedrift</a>
+                                        </h1>
+                                        <h3 class="g-slideshow-top-title ">
+                                            Våre tilbydere får gratis medlemsskap<br> og betaler bare for formidling.
+                                            <br>
+                                        </h3>
+                                        <a class="g-slideshow-author" href="https://fagfolk.net/profiler-din-bedrift/" target="_self">
+                                            Les mer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev" style="background-image: url(&quot;https://fagfolk.net/wp-content/themes/rt_akuatik/images/backgrounds/slideshow/bg-01.svg&quot;); background-position: center center; width: 1835px;" data-swiper-slide-index="0">
+                                <div class="slide" style="background-image: url(https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/home/slideshow/hammer.png); background-position: right bottom">
+                                    <div class="slide-content">
+                                        <h1 class="g-slideshow-main-title">
+                                            <a href="https://fagfolk.net/finn-fagfolk/" target="_self">Finn proffe fagfolk her</a>
+                                        </h1>
+                                        <h3 class="g-slideshow-top-title ">
+                                            Se deres fagbrev og sertifikater.<br>Vi gir deg mulighet til å ta trygge valg!
+                                        </h3>
+                                        <a class="g-slideshow-author" href="https://fagfolk.net/finn-fagfolk/" target="_self">
+                                            Les mer
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-pagination swiper-pagination-progressbar">
+                            <span class="swiper-pagination-progressbar-fill" style="transform: translate3d(0px, 0px, 0px) scaleX(1) scaleY(1); transition-duration: 800ms;"></span>
+                        </div>
+                        <div class="navigation">
+                            <div class="sswiper-button-next" tabindex="0" role="button" aria-label="Next slide">
+                                <i class="fa fa-angle-right"></i>
+                            </div>
+                            <div class="sswiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
+                                <i class="fa fa-angle-left"></i>
+                            </div>
+                        </div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <header id="g-header" class="section-horizontal-paddings section-vertical-paddings">
+        <div class="g-grid">
+
+            <div class="g-block size-30">
+                <div id="simplecontent-4643-particle" class="g-content g-particle">
+                    <div class="text-left">
+                        <div class="g-simplecontent">
+
+                            <h2 class="g-title">Styrker fagfolk og trygger kunden!</h2>
+                            <div class="g-simplecontent-item g-simplecontent-layout-standard">
+
+                                <div class="g-simplecontent-item-readmore-container">
+                                    <a target="_self" href="https://fagfolk.net/finn-fagfolk/" class="g-simplecontent-item-readmore ">
+                                        Finn fagfolk her
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="g-block size-70 nopaddingtop nopaddingbottom">
+                <div id="infolist-7933-particle" class="g-content g-particle">
+                    <div class="g-infolist-particle">
+
+                        <div class="g-infolist g-2cols ">
+
+                            <div class="g-infolist-item g-infolist-with-icon ">
+
+                                <div class="g-infolist-item-container">
+
+                                    <div class="g-infolist-item-icon left">
+                                        <i class="fas fa-life-ring"></i>
+                                    </div>
+
+                                    <div class="g-infolist-item-text  g-infolist-textstyle-large">
+
+                                        <div class="g-infolist-item-title ">
+                                            <div class="g-title-hero">TRYGGER KUNDEN</div>
+                                        </div>
+                                        <div class="g-infolist-item-desc">
+                                            <div class="g-large">
+
+                                                Vi tilbyr kvalitetssikrede leverandører over hele landet. Kun faglærte medarbeidere.
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="g-infolist-item g-infolist-with-icon ">
+
+                                <div class="g-infolist-item-container">
+
+                                    <div class="fagfolk-supplier-module">
+                                        <!-- Default supplier modal elements -->
+                                        <script src="server/fagfolk-suppliers-modules/supplier-modal.js"></script>
+                                        <!-- Default supplier module elements -->
+                                        <script src="server/fagfolk-suppliers-modules/supplier-module.js"></script>
+                                        <!-- Every supplier has own file with own styling -->
+                                        <script src="server/fagfolk-suppliers-modules/suppliers/supplier-1.js"></script>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="testimonials-8981-particle" class="g-content g-particle">
+                    <div class=" g-testimonials" data-testimonials-id="testimonials-8981" data-testimonials-autoplay="false" data-testimonials-loop="true" data-testimonials-timeout="8000" data-testimonials-speed="800">
+
+                        <!-- Swiper -->
+                        <div class="g-testimonials-container swiper-container-initialized swiper-container-vertical">
+                            <div class="g-testimonials-pagination">
+                                <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
+                                    <i class="fa fa-angle-up"></i>
+                                </div>
+
+                                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+                                    <span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span>
+                                </div>
+
+                                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide">
+                                    <i class="fa fa-angle-down"></i>
+                                </div>
+                            </div>
+
+                            <div class="swiper-wrapper testimonial-wrapper" style="height: 700px; transform: translate3d(0px, -734px, 0px); transition-duration: 0ms;">
+                                <div class="swiper-slide swiper-slide-duplicate swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="1" style="height: 724px; margin-bottom: 10px;">
+                                    <div class="g-testimonials-image">
+                                        <img width="582" height="635" alt="Heidi i butikkjede" data-src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-renovering.webp" class=" lazyloaded" src="index_files/kunde-renovering.webp">
+                                        <noscript>
+                                            <img width="582" height="635" src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-renovering.webp" alt="Heidi i butikkjede"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-testimonials-wrapper" style="">
+                                        <h2 class="g-testimonials-content">
+                                            “To av våre lokasjoner utbedret. Det var enkelt å forholde seg til en leverandør, og jobben ble godt utført.”
+                                        </h2>
+
+                                        <p class="g-testimonials-author">
+                                            – Heidi
+                                            (daglig leder i butikkjede)
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="0" style="height: 724px; margin-bottom: 10px;">
+                                    <div class="g-testimonials-image">
+                                        <img width="582" height="635" alt="Harald - Nesoddtangen" data-src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-nesoddtangen.webp" class=" lazyloaded" src="index_files/kunde-nesoddtangen.webp">
+                                        <noscript>
+                                            <img width="582" height="635" src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-nesoddtangen.webp" alt="Harald - Nesoddtangen"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-testimonials-wrapper" style="">
+                                        <h2 class="g-testimonials-content">
+                                            “Kjempefornøyd med prosessen. Dette var noe helt annet enn å ringe en lokal snekker.”
+                                        </h2>
+
+                                        <p class="g-testimonials-author">
+                                            – Harald
+                                            (Nesoddtangen)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide swiper-slide-next swiper-slide-duplicate-prev" data-swiper-slide-index="1" style="height: 724px; margin-bottom: 10px;">
+                                    <div class="g-testimonials-image">
+                                        <img width="582" height="635" alt="Heidi i butikkjede" data-src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-renovering.webp" class=" lazyloaded" src="index_files/kunde-renovering.webp">
+                                        <noscript>
+                                            <img width="582" height="635" src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-renovering.webp" alt="Heidi i butikkjede"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-testimonials-wrapper" style="">
+                                        <h2 class="g-testimonials-content">
+                                            “To av våre lokasjoner utbedret. Det var enkelt å forholde seg til en leverandør, og jobben ble godt utført.”
+                                        </h2>
+
+                                        <p class="g-testimonials-author">
+                                            – Heidi
+                                            (daglig leder i butikkjede)
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="0" style="height: 724px; margin-bottom: 10px;">
+                                    <div class="g-testimonials-image">
+                                        <img width="582" height="635" alt="Harald - Nesoddtangen" data-src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-nesoddtangen.webp" class=" lazyloaded" src="index_files/kunde-nesoddtangen.webp">
+                                        <noscript>
+                                            <img width="582" height="635" src="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/images/kunde-nesoddtangen.webp" alt="Harald - Nesoddtangen"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-testimonials-wrapper" style="">
+                                        <h2 class="g-testimonials-content">
+                                            “Kjempefornøyd med prosessen. Dette var noe helt annet enn å ringe en lokal snekker.”
+                                        </h2>
+
+                                        <p class="g-testimonials-author">
+                                            – Harald
+                                            (Nesoddtangen)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-nav-wrapper">
+                                <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
+                                    <i class="fa fa-angle-left"></i>
+                                </div>
+                                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide">
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="g-grid">
+
+            <div class="g-block size-30">
+                <div id="simplecontent-7937-particle" class="g-content g-particle">
+                    <div class="text-left">
+                        <div class="g-simplecontent">
+
+                            <h2 class="g-title">Siste fra bloggen</h2>
+                            <div class="g-simplecontent-item g-simplecontent-layout-standard">
+
+                                <div class="g-simplecontent-item-readmore-container">
+                                    <a target="_self" href="https://fagfolk.net/blog/" class="g-simplecontent-item-readmore ">
+                                        Les hele bloggen her
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="g-block size-70">
+                <div id="contentarray-9217-particle" class="g-content g-particle">
+                    <div class="g-content-array g-wordpress-posts">
+
+                        <div class="g-grid">
+
+                            <div class="g-block">
+                                <div class="g-content">
+                                    <div class="g-array-item">
+                                        <div class="g-array-item-image">
+                                            <a href="https://fagfolk.net/etterisolere-yttervegg-5cm/">
+                                                <img width="512" height="352" data-src="https://fagfolk.net/wp-content/uploads/2022/01/Etterisolere-yttervegg-5cm.webp" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                                <noscript>
+                                                    <img width="512" height="352" src="https://fagfolk.net/wp-content/uploads/2022/01/Etterisolere-yttervegg-5cm.webp"/>
+                                                </noscript>
+                                            </a>
+                                        </div>
+
+                                        <div class="g-array-item-title">
+                                            <h3 class="g-item-title">
+                                                <a href="https://fagfolk.net/etterisolere-yttervegg-5cm/">
+                                                    Etterisolere yttervegg 5cm
+                                                </a>
+                                            </h3>
+                                        </div>
+
+                                        <div class="g-array-item-details">
+                                                                                    <span class="g-array-item-date">
+                                                                                                    <i class="far fa-clock" aria-hidden="true"></i>lørdag, januar 01, 2022
+                                                                                            </span>
+
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user" aria-hidden="true"></i>Bjørn Simonsen
+                                            </span>
+
+                                            <span class="g-array-item-category">
+                                                <i class="fa fa-folder-open" aria-hidden="true"></i><a href="https://fagfolk.net/category/blog/">
+                                                            Blog
+                                                        </a>
+                                            </span>
+
+                                        </div>
+
+                                        <div class="g-array-item-text">
+
+                                            <h1>Etterisolere yttervegg 5cm</h1>
+
+                                            <p>Etterisolering – ulike metoder</p>
+
+                                            <p>Eldre hus kan være trekkfulle og kalde. Mange ønsker derfor å se på muligheten av å isolere huset bedre. Spesielt når kulden setter...</p>
+                                        </div>
+
+                                        <div class="g-array-item-read-more">
+                                            <a href="https://fagfolk.net/etterisolere-yttervegg-5cm/" class="button">
+                                                Les mer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="g-block">
+                                <div class="g-content">
+                                    <div class="g-array-item">
+                                        <div class="g-array-item-image">
+                                            <a href="https://fagfolk.net/bytte-tak-pa-gammelt-hus/">
+                                                <img width="512" height="352" data-src="https://fagfolk.net/wp-content/uploads/2021/08/tommerhus-tak.webp" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                                <noscript>
+                                                    <img width="512" height="352" src="https://fagfolk.net/wp-content/uploads/2021/08/tommerhus-tak.webp"/>
+                                                </noscript>
+                                            </a>
+                                        </div>
+
+                                        <div class="g-array-item-title">
+                                            <h3 class="g-item-title">
+                                                <a href="https://fagfolk.net/bytte-tak-pa-gammelt-hus/">
+                                                    Bytte tak på gammelt hus
+                                                </a>
+                                            </h3>
+                                        </div>
+
+                                        <div class="g-array-item-details">
+                                                                                    <span class="g-array-item-date">
+                                                                                                    <i class="far fa-clock" aria-hidden="true"></i>fredag, august 27, 2021
+                                                                                            </span>
+
+                                            <span class="g-array-item-author">
+                                                <i class="fa fa-user" aria-hidden="true"></i>Bjørn Simonsen
+                                            </span>
+
+                                            <span class="g-array-item-category">
+                                                <i class="fa fa-folder-open" aria-hidden="true"></i><a href="https://fagfolk.net/category/blog/">
+                                                            Blog
+                                                        </a>
+                                            </span>
+
+                                        </div>
+
+                                        <div class="g-array-item-text">
+
+                                            <h1>Bytte tak på gammelt hus</h1>
+
+                                            <p>Denne artikkelen skal prøve å veilede vanlige huseiere av eldre hus, hva slags tak de har, hvilke utfordringer de kan oppleve og hva det innebærer å bytte tak på gammel...</p>
+                                        </div>
+
+                                        <div class="g-array-item-read-more">
+                                            <a href="https://fagfolk.net/bytte-tak-pa-gammelt-hus/" class="button">
+                                                Les mer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <section id="g-showcase" class="section-horizontal-paddings">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="pricingtable-2666-particle" class="g-content g-particle">
+                    <div class="g-pricingtable-particle ">
+
+                        <div class="g-pricingtable-top">
+                            <div class="g-title-wrapper">
+
+                                <h2 class="g-title">Eksempler på våre fagfolk</h2>
+                            </div>
+
+                            <div class="g-pricingtable-headertext">Det er vanskelig for hvermansen å finne gode Fagfolk.
+                                <span>Derfor startet vi opp Fagfolk.net, slik at du kan enkelt finne gode Fagfolk.</span>
+                            </div>
+                        </div>
+
+                        <div id="g-pricingtable-pricingtable-2666" class="g-pricingtable-container g-pricingtable-3-col">
+
+                            <div class="g-pricingtable-col-item accent1" id="g-pricingtable-col-item-1">
+                                <ul class="g-pricingtable ">
+
+                                    <li class="g-pricingtable-plan">
+                                        <a target="_self" href="https://fagfolk.net/" title="Les mer">
+
+                                            Snekker
+
+                                        </a>
+                                    </li>
+
+                                    <li class="g-pricingtable-price">Snekker</li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-0 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Se fagbrevet hos oss
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-1 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Three revisions
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-2 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        One designer
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-3 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Sketch files
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-4 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Custom fonts
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-5 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Custom icons
+                                    </li>
+
+                                    <li class="g-pricingtable-cta">
+                                        <a target="_self" href="https://fagfolk.net/" title="Les mer" class="button ">
+                                            Les mer
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="g-pricingtable-col-item accent2" id="g-pricingtable-col-item-2">
+                                <ul class="g-pricingtable ">
+
+                                    <li class="g-pricingtable-plan">
+                                        <a target="_self" href="https://fagfolk.net/" title="Choose Pro Tier">
+
+                                            Elektriker
+
+                                        </a>
+                                    </li>
+
+                                    <li class="g-pricingtable-price">$5,999</li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-0 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Two projects
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-1 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        FIve revisions
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-2 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Three designers
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-3 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Sketch files
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-4 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Photoshoot
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-5 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Front-end
+                                    </li>
+
+                                    <li class="g-pricingtable-cta">
+                                        <a target="_self" href="https://fagfolk.net/" title="Choose Pro Tier" class="button ">
+                                            Choose Pro Tier
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="g-pricingtable-col-item accent3" id="g-pricingtable-col-item-3">
+                                <ul class="g-pricingtable ">
+
+                                    <li class="g-pricingtable-plan">
+                                        <a target="_self" href="https://fagfolk.net/" title="Choose Executive Tier">
+
+                                            Rørlegger
+
+                                        </a>
+                                    </li>
+
+                                    <li class="g-pricingtable-price">$9,999</li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-0 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Three projects
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-1 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Unlimited revisions
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-2 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Whole team engaged
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-3 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Design + development
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-4 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        SEO included
+                                    </li>
+                                    <li class="g-pricingtable-item g-pricingtable-item-5 ">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        Marketing plan
+                                    </li>
+
+                                    <li class="g-pricingtable-cta">
+                                        <a target="_self" href="https://fagfolk.net/" title="Choose Executive Tier" class="button ">
+                                            Choose Executive Tier
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-expanded" class="section-horizontal-paddings section-vertical-paddings-large">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="team-3195-particle" class="g-content g-particle">
+                    <div class="g-team visible" data-team-id="team-3195" data-initial-group="2">
+                        <div class="g-team-header">
+
+                            <div class="g-team-nav">
+                                <div class="g-team-nav-container">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+
+                                    <div class="g-team-nav-item" data-group="all">
+                                        All
+                                    </div>
+
+                                    <div class="g-team-nav-item" data-group="1">
+                                        Managers
+                                    </div>
+                                    <div class="g-team-nav-item selected" data-group="2">
+                                        Designers
+                                    </div>
+                                    <div class="g-team-nav-item" data-group="3">
+                                        Developers
+                                    </div>
+                                    <div class="g-team-nav-item" data-group="4">
+                                        Writers
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="g-team-grid cols-5 animate shuffle" style="overflow: hidden; height: 421.281px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1) 0s;">
+                            <div class="g-team-grid-sizer"></div>
+
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;1&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity; transform: translate(0px, 0px) scale(0.001);">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/alex-sarc.jpg&quot;); height: 240px; border-radius: 64% 36% 52% 49% / 57% 49% 53% 45%; animation-duration: 32s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Alex Sarc</h4>
+
+                                        <p>Senior Manager</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;1&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(300px, 0px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/barlow-ergson.jpg&quot;); height: 240px; border-radius: 65% 40% 53% 47% / 57% 50% 51% 42%; animation-duration: 30s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Barlow Ergson</h4>
+
+                                        <p>Manager</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--visible" data-groups="[&quot;2&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(0px, 0px) scale(1); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/john-doe.jpg&quot;); height: 240px; border-radius: 60% 35% 54% 46% / 56% 49% 50% 41%; animation-duration: 17s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>John Doe</h4>
+
+                                        <p>Creative Director</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--visible" data-groups="[&quot;2&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(300px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/michael-smith.jpg&quot;); height: 240px; border-radius: 63% 36% 50% 45% / 55% 45% 52% 44%; animation-duration: 30s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Michael Smith</h4>
+
+                                        <p>Lead Designer</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--visible" data-groups="[&quot;2&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(601px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 15ms, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/janice-cold.jpg&quot;); height: 240px; border-radius: 62% 35% 55% 49% / 60% 46% 54% 42%; animation-duration: 18s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Janice Cold</h4>
+
+                                        <p>Illustrator</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--visible" data-groups="[&quot;2&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(901px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 30ms, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/miriam-vicci.jpg&quot;); height: 240px; border-radius: 61% 35% 55% 48% / 56% 49% 55% 42%; animation-duration: 17s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Miriam Vicci</h4>
+
+                                        <p>Web designer</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--visible" data-groups="[&quot;2&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(1202px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 45ms, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/daniel-schmidt.jpg&quot;); height: 240px; border-radius: 65% 37% 54% 50% / 55% 47% 54% 41%; animation-duration: 33s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Daniel Schmidt</h4>
+
+                                        <p>UI/UX Expert</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;3&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(1202px, 389px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/sonia-elvic.jpg&quot;); height: 240px; border-radius: 63% 35% 52% 45% / 58% 48% 51% 42%; animation-duration: 24s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Sonia Elvic</h4>
+
+                                        <p>Front End Developer</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;3&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(300px, 421px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/john-lee.jpg&quot;); height: 240px; border-radius: 65% 40% 53% 48% / 56% 46% 52% 45%; animation-duration: 30s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>John Lee</h4>
+
+                                        <p>Full Stack Developer</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;3&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(901px, 421px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/jason-bourne.jpg&quot;); height: 240px; border-radius: 61% 36% 55% 45% / 55% 46% 54% 44%; animation-duration: 28s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Jason Bourne</h4>
+
+                                        <p>Back End Developer</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;4&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(601px, 779px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/arthur-corry.jpg&quot;); height: 240px; border-radius: 62% 36% 52% 50% / 55% 47% 50% 44%; animation-duration: 15s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Arthur Corry</h4>
+
+                                        <p>Content Manager</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-team-grid-item shuffle-item shuffle-item--hidden" data-groups="[&quot;4&quot;]" aria-hidden="true" style="position: absolute; top: 0px; left: 0px; visibility: hidden; will-change: transform; opacity: 0; transform: translate(0px, 811px) scale(0.001); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                <div class="g-team-grid-item-wrapper">
+                                    <div class="g-team-grid-item-image">
+                                        <div class="g-team-grid-item-blob" style="background-image: url(&quot;https://fagfolk.net/wp-content/uploads/rocketlauncher/home/expanded/karen-page.jpg&quot;); height: 240px; border-radius: 60% 35% 50% 46% / 55% 46% 55% 42%; animation-duration: 27s;"></div>
+                                    </div>
+
+                                    <div class="g-content-wrap">
+                                        <h4>Karen Page</h4>
+
+                                        <p>Senior Editor</p>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/#" target="_self" class="g-team-link-overlay"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-extension" class="section-horizontal-paddings section-vertical-paddings">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="latestnews-4049-particle" class="g-content g-particle">
+                    <div class="g-latestnews visible" data-latestnews-id="latestnews-4049" data-latestnews-accesstoken="">
+                        <div class="g-latestnews-grid cols-5 shuffle" style="overflow: hidden; height: 875.968px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1) 0s;">
+                            <div class="g-latestnews-grid-sizer"></div>
+                            <div class="g-latestnews-grid-item g-latestnews-title shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+                                Join us on Twitter and Instagram
+                            </div>
+
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(314px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="900" alt="News1" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-1.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="900" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-1.jpg" alt="News1"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(628px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 15ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-text dark">
+
+                                    <div class="g-latestnews-grid-item-content">
+                                        <div class="g-latestnews-grid-item-description">
+                                            Show off important numbers and statistics with the Grid Statistic particle.
+                                        </div>
+
+                                        <div class="g-latestnews-grid-item-date">
+                                            <span>august 23, 2019</span>
+                                        </div>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(942px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 30ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News3" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-2.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-2.jpg" alt="News3"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(1256px, 0px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 45ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="900" alt="News4" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-3.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="900" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-3.jpg" alt="News4"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(628px, 224px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 60ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News5" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-5.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-5.jpg" alt="News5"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(0px, 301px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 75ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-text light">
+
+                                    <div class="g-latestnews-grid-item-content">
+                                        <div class="g-latestnews-grid-item-description">
+                                            Display content directly from your CMS using the Block Content particle.
+                                        </div>
+
+                                        <div class="g-latestnews-grid-item-date">
+                                            <span>august 23, 2019</span>
+                                        </div>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(314px, 326px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 90ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News7" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-9.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-9.jpg" alt="News7"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(942px, 326px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 105ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News8" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-6.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-6.jpg" alt="News8"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(1256px, 326px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 120ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-text medium">
+
+                                    <div class="g-latestnews-grid-item-content">
+                                        <div class="g-latestnews-grid-item-description">
+                                            The Particles particle is a simple way to add animations to your site.
+                                        </div>
+
+                                        <div class="g-latestnews-grid-item-date">
+                                            <span>august 19, 2019</span>
+                                        </div>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(0px, 526px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 135ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News10" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-7.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-7.jpg" alt="News10"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(628px, 550px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-text light">
+
+                                    <div class="g-latestnews-grid-item-content">
+                                        <div class="g-latestnews-grid-item-description">
+                                            Want to increase signups to your newsletter? The Newsletter particle is a great way!
+                                        </div>
+
+                                        <div class="g-latestnews-grid-item-date">
+                                            <span>august 14, 2019</span>
+                                        </div>
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                            <div class="g-latestnews-grid-item shuffle-item shuffle-item--visible" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(1256px, 550px) scale(1); transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity;">
+                                <div class="g-latestnews-grid-item-wrapper g-latestnews-layout-photo light">
+                                    <div class="g-latestnews-grid-item-image">
+                                        <img width="600" height="400" alt="News12" data-src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-8.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        <noscript>
+                                            <img width="600" height="400" src="https://fagfolk.net/wp-content/uploads/rocketlauncher/home/extension/news-8.jpg" alt="News12"/>
+                                        </noscript>
+                                    </div>
+
+                                    <div class="g-latestnews-grid-item-content">
+
+                                    </div>
+
+                                    <a href="https://fagfolk.net/" target="_self" class="g-latestnews-link-overlay"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-bottom" class="section-horizontal-paddings">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <div id="blockcontent-4770-particle" class="g-content g-particle">
+                    <div class="center">
+                        <div class="g-blockcontent">
+                            <div class="g-grid">
+                                <div class="g-block">
+                                    <div class="g-content g-blockcontent-header">
+                                        <h2 class="g-title g-blockcontent-headline">
+                                            Akuatik takes your website to new heights...</h2>
+                                        <div class="g-blockcontent-description">
+                                            With over two dozen powerful particles and limitless customization options, your brand will soar!
+                                        </div>
+                                        <p class="g-blockcontent-buttons">
+                                            <a target="_self" href="https://fagfolk.net/#" class="button button-large">
+                                                Get a Quote</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="g-grid g-blockcontent-subcontent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="g-container-footer" class="g-wrapper" style="position: relative;">
+        <div class="g-grid">
+
+            <div class="g-block size-100">
+                <footer id="g-footer" class="section-horizontal-paddings section-vertical-paddings medpaddingbottom">
+                    <div class="g-grid">
+
+                        <div class="g-block size-100">
+                            <div id="simplemenu-4660-particle" class="g-content g-particle">
+                                <div class="g-simplemenu-particle ">
+
+                                    <div class="g-simplemenu-container">
+                                        <h6>Sider</h6>
+                                        <ul class="g-simplemenu">
+                                            <li>
+                                                <a target="_self" href="https://fagfolk.net/blog/" title="Blogg">Blogg</a>
+                                            </li>
+                                            <li>
+                                                <a target="_self" href="https://fagfolk.net/om-oss/" title="Om oss">Om oss</a>
+                                            </li>
+                                            <li>
+                                                <a target="_self" href="https://fagfolk.net/kontakt-oss/" title="Kontakt oss">Kontakt oss</a>
+                                            </li>
+                                            <li>
+                                                <a target="_self" href="https://fagfolk.net/finn-fagfolk/" title="Finn Fagfolk">Finn Fagfolk</a>
+                                            </li>
+                                            <li>
+                                                <a target="_self" href="https://fagfolk.net/profiler-din-bedrift/" title="Profiler din bedrift">Profiler din bedrift</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="g-simplemenu-container">
+                                        <h6>Følg oss</h6>
+                                        <ul class="g-simplemenu">
+                                            <li>
+                                                <a target="_blank" href="https://www.facebook.com/Fagfolk-466943003757795" title="Facebook">Facebook</a>
+                                            </li>
+                                            <li>
+                                                <a target="_blank" href="https://fagfolk.net/#" title="LinkedIn">LinkedIn</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="g-simplemenu-container">
+                                        <h6>Kontakt</h6>
+                                        <ul class="g-simplemenu">
+                                            <li>
+                                                <a target="_self" href="mailto:hei@fagfolk.net" title="hei@fagfolk.net">hei@fagfolk.net</a>
+                                            </li>
+                                            <li>
+                                                <a target="_self" href="tel:+4799038002" title="+47 990 38 002">+47 990 38 002</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </footer>
+
+                <section id="g-copyright" class="section-horizontal-paddings">
+                    <div class="g-grid">
+
+                        <div class="g-block size-100 center">
+                            <div id="copyright-6480-particle" class="g-content g-particle"> ©
+                                2022
+                                websidene er kopibeskyttet Fagfolkportalen AS. Bilder er kopibeskyttet
+                                <a href="https://pexels.com/">Pexels.com</a>.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-grid">
+
+                        <div class="g-block size-100">
+                            <div id="particlesjs-4489-particle" class="g-content g-particle">
+                                <div id="particlesjs-4489" data-particlesjs-id="particlesjs-4489" data-particlesjs-mode="section" data-particlesjs-path="https://fagfolk.net/wp-content/themes/rt_akuatik/json/particlejs/preset1.json" class="g-particlesjs">
+                                    <canvas class="particles-js-canvas-el" width="1903" height="502" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<script type="text/javascript" src="index_files/regenerator-runtime.min.js.download" id="regenerator-runtime-js" defer=""></script>
+<script type="text/javascript" src="index_files/wp-polyfill.min.js.download" id="wp-polyfill-js"></script>
+<script type="text/javascript" id="contact-form-7-js-extra">
+    /* <![CDATA[ */
+    var wpcf7 = { 'api': { 'root': 'https:\/\/fagfolk.net\/wp-json\/', 'namespace': 'contact-form-7\/v1' }, 'cached': '1' };
+    /* ]]> */
+</script>
+<script data-minify="1" type="text/javascript" src="index_files/index.js.download" id="contact-form-7-js" defer=""></script>
+<script type="text/javascript" id="rocket-browser-checker-js-after">
+    'use strict';
+    var _createClass = function () {
+        function defineProperties (target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
+                descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, 'value' in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor);
+            }
+        }
+
+        return function (Constructor, protoProps, staticProps) {return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), Constructor;};
+    }();
+
+    function _classCallCheck (instance, Constructor) {if (!(instance instanceof Constructor)) throw new TypeError('Cannot call a class as a function');}
+
+    var RocketBrowserCompatibilityChecker = function () {
+        function RocketBrowserCompatibilityChecker (options) {_classCallCheck(this, RocketBrowserCompatibilityChecker), this.passiveSupported = !1, this._checkPassiveOption(this), this.options = !!this.passiveSupported && options;}
+
+        return _createClass(RocketBrowserCompatibilityChecker, [{
+            key: '_checkPassiveOption', value: function (self) {
+                try {
+                    var options = { get passive () {return !(self.passiveSupported = !0);} };
+                    window.addEventListener('test', null, options), window.removeEventListener('test', null, options);
+                } catch (err) {self.passiveSupported = !1;}
+            },
+        }, {
+            key: 'initRequestIdleCallback', value: function () {
+                !1 in window && (window.requestIdleCallback = function (cb) {
+                    var start = Date.now();
+                    return setTimeout(function () {cb({ didTimeout: !1, timeRemaining: function () {return Math.max(0, 50 - (Date.now() - start));} });}, 1);
+                }), !1 in window && (window.cancelIdleCallback = function (id) {return clearTimeout(id);});
+            },
+        }, { key: 'isDataSaverModeOn', value: function () {return 'connection' in navigator && !0 === navigator.connection.saveData;} }, {
+            key: 'supportsLinkPrefetch', value: function () {
+                var elem = document.createElement('link');
+                return elem.relList && elem.relList.supports && elem.relList.supports('prefetch') && window.IntersectionObserver && 'isIntersecting' in IntersectionObserverEntry.prototype;
+            },
+        }, { key: 'isSlowConnection', value: function () {return 'connection' in navigator && 'effectiveType' in navigator.connection && ('2g' === navigator.connection.effectiveType || 'slow-2g' === navigator.connection.effectiveType);} }]), RocketBrowserCompatibilityChecker;
+    }();
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+    /* <![CDATA[ */
+    var RocketPreloadLinksConfig = { 'excludeUris': '\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php', 'usesTrailingSlash': '1', 'imageExt': 'jpg|jpeg|gif|png|tiff|bmp|webp|avif', 'fileExt': 'jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm', 'siteUrl': 'https:\/\/fagfolk.net', 'onHoverDelay': '100', 'rateThrottle': '3' };
+    /* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-after">
+    (function () {
+        'use strict';
+        var r = 'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator ? function (e) {return typeof e;} : function (e) {return e && 'function' == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? 'symbol' : typeof e;}, e = function () {
+            function i (e, t) {
+                for (var n = 0; n < t.length; n++) {
+                    var i = t[n];
+                    i.enumerable = i.enumerable || !1, i.configurable = !0, 'value' in i && (i.writable = !0), Object.defineProperty(e, i.key, i);
+                }
+            }
+
+            return function (e, t, n) {return t && i(e.prototype, t), n && i(e, n), e;};
+        }();
+
+        function i (e, t) {if (!(e instanceof t)) throw new TypeError('Cannot call a class as a function');}
+
+        var t = function () {
+            function n (e, t) {i(this, n), this.browser = e, this.config = t, this.options = this.browser.options, this.prefetched = new Set, this.eventTime = null, this.threshold = 1111, this.numOnHover = 0;}
+
+            return e(n, [{ key: 'init', value: function () {!this.browser.supportsLinkPrefetch() || this.browser.isDataSaverModeOn() || this.browser.isSlowConnection() || (this.regex = { excludeUris: RegExp(this.config.excludeUris, 'i'), images: RegExp('.(' + this.config.imageExt + ')$', 'i'), fileExt: RegExp('.(' + this.config.fileExt + ')$', 'i') }, this._initListeners(this));} }, { key: '_initListeners', value: function (e) {-1 < this.config.onHoverDelay && document.addEventListener('mouseover', e.listener.bind(e), e.listenerOptions), document.addEventListener('mousedown', e.listener.bind(e), e.listenerOptions), document.addEventListener('touchstart', e.listener.bind(e), e.listenerOptions);} }, {
+                key: 'listener', value: function (e) {
+                    var t = e.target.closest('a'), n = this._prepareUrl(t);
+                    if (null !== n) switch (e.type) {
+                        case'mousedown':
+                        case'touchstart':
+                            this._addPrefetchLink(n);
+                            break;
+                        case'mouseover':
+                            this._earlyPrefetch(t, n, 'mouseout');
+                    }
+                },
+            }, {
+                key: '_earlyPrefetch', value: function (t, e, n) {
+                    var i = this, r = setTimeout(function () {
+                        if (r = null, 0 === i.numOnHover) setTimeout(function () {return i.numOnHover = 0;}, 1e3); else
+                            if (i.numOnHover > i.config.rateThrottle) return;
+                        i.numOnHover++, i._addPrefetchLink(e);
+                    }, this.config.onHoverDelay);
+                    t.addEventListener(n, function e () {t.removeEventListener(n, e, { passive: !0 }), null !== r && (clearTimeout(r), r = null);}, { passive: !0 });
+                },
+            }, {
+                key: '_addPrefetchLink', value: function (i) {
+                    return this.prefetched.add(i.href), new Promise(function (e, t) {
+                        var n = document.createElement('link');
+                        n.rel = 'prefetch', n.href = i.href, n.onload = e, n.onerror = t, document.head.appendChild(n);
+                    }).catch(function () {});
+                },
+            }, {
+                key: '_prepareUrl', value: function (e) {
+                    if (null === e || 'object' !== (void 0 === e ? 'undefined' : r(e)) || !1 in e || -1 === ['http:', 'https:'].indexOf(e.protocol)) return null;
+                    var t = e.href.substring(0, this.config.siteUrl.length), n = this._getPathname(e.href, t), i = { original: e.href, protocol: e.protocol, origin: t, pathname: n, href: t + n };
+                    return this._isLinkOk(i) ? i : null;
+                },
+            }, {
+                key: '_getPathname', value: function (e, t) {
+                    var n = t ? e.substring(this.config.siteUrl.length) : e;
+                    return n.startsWith('/') || (n = '/' + n), this._shouldAddTrailingSlash(n) ? n + '/' : n;
+                },
+            }, { key: '_shouldAddTrailingSlash', value: function (e) {return this.config.usesTrailingSlash && !e.endsWith('/') && !this.regex.fileExt.test(e);} }, { key: '_isLinkOk', value: function (e) {return null !== e && 'object' === (void 0 === e ? 'undefined' : r(e)) && (!this.prefetched.has(e.href) && e.origin === this.config.siteUrl && -1 === e.href.indexOf('?') && -1 === e.href.indexOf('#') && !this.regex.excludeUris.test(e.href) && !this.regex.images.test(e.href));} }], [{ key: 'run', value: function () {'undefined' != typeof RocketPreloadLinksConfig && new n(new RocketBrowserCompatibilityChecker({ capture: !0, passive: !0 }), RocketPreloadLinksConfig).init();} }]), n;
+        }();
+        t.run();
+    }());
+</script>
+<script data-minify="1" type="text/javascript" src="index_files/simplebar.js.download" id="wd-asl-scroll-simple-js" defer=""></script>
+<script type="text/javascript" id="wd-asl-ajaxsearchlite-js-before">
+    window.ASL = typeof window.ASL !== 'undefined' ? window.ASL : {};
+    window.ASL.wp_rocket_exception = 'DOMContentLoaded';
+    window.ASL.ajaxurl = 'https:\/\/fagfolk.net\/wp-admin\/admin-ajax.php';
+    window.ASL.backend_ajaxurl = 'https:\/\/fagfolk.net\/wp-admin\/admin-ajax.php';
+    window.ASL.js_scope = 'jQuery';
+    window.ASL.asl_url = 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/';
+    window.ASL.detect_ajax = 0;
+    window.ASL.media_query = 4751;
+    window.ASL.version = 4751;
+    window.ASL.pageHTML = '';
+    window.ASL.additional_scripts = [{ 'handle': 'wd-asl-scroll-simple', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/external\/simplebar.js', 'prereq': false }, { 'handle': 'wd-asl-ajaxsearchlite', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/plugin\/optimized\/asl-prereq.js', 'prereq': [] }, { 'handle': 'wd-asl-ajaxsearchlite-core', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/plugin\/optimized\/asl-core.js', 'prereq': [] }, { 'handle': 'wd-asl-ajaxsearchlite-vertical', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/plugin\/optimized\/asl-results-vertical.js', 'prereq': ['wd-asl-ajaxsearchlite'] }, { 'handle': 'wd-asl-ajaxsearchlite-autocomplete', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/plugin\/optimized\/asl-autocomplete.js', 'prereq': ['wd-asl-ajaxsearchlite'] }, { 'handle': 'wd-asl-ajaxsearchlite-load', 'src': 'https:\/\/fagfolk.net\/wp-content\/plugins\/ajax-search-lite\/js\/min\/plugin\/optimized\/asl-load.js', 'prereq': ['wd-asl-ajaxsearchlite-autocomplete'] }];
+    window.ASL.script_async_load = false;
+    window.ASL.scrollbar = true;
+    window.ASL.css_async = false;
+    window.ASL.js_retain_popstate = 0;
+    window.ASL.highlight = { 'enabled': true, 'data': [{ 'selector': '#content', 'scroll': false, 'scroll_offset': 0, 'whole': true }] };
+    window.ASL.fix_duplicates = 1;
+    window.ASL.analytics = { 'method': 0, 'tracking_id': '', 'string': '?ajax_search={asl_term}', 'event': { 'focus': { 'active': 1, 'action': 'focus', 'category': 'ASL', 'label': 'Input focus', 'value': '1' }, 'search_start': { 'active': 0, 'action': 'search_start', 'category': 'ASL', 'label': 'Phrase: {phrase}', 'value': '1' }, 'search_end': { 'active': 1, 'action': 'search_end', 'category': 'ASL', 'label': '{phrase} | {results_count}', 'value': '1' }, 'magnifier': { 'active': 1, 'action': 'magnifier', 'category': 'ASL', 'label': 'Magnifier clicked', 'value': '1' }, 'return': { 'active': 1, 'action': 'return', 'category': 'ASL', 'label': 'Return button pressed', 'value': '1' }, 'facet_change': { 'active': 0, 'action': 'facet_change', 'category': 'ASL', 'label': '{option_label} | {option_value}', 'value': '1' }, 'result_click': { 'active': 1, 'action': 'result_click', 'category': 'ASL', 'label': '{result_title} | {result_url}', 'value': '1' } } };
+</script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-prereq.js.download" id="wd-asl-ajaxsearchlite-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-core.js.download" id="wd-asl-ajaxsearchlite-core-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-results-vertical.js.download" id="wd-asl-ajaxsearchlite-vertical-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-autocomplete.js.download" id="wd-asl-ajaxsearchlite-autocomplete-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-load.js.download" id="wd-asl-ajaxsearchlite-load-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/asl-wrapper.js.download" id="wd-asl-ajaxsearchlite-wrapper-js" defer=""></script>
+<script type="text/javascript" src="index_files/core.min.js.download" id="jquery-ui-core-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/lightcase.js.download" id="lightcase-js" defer=""></script>
+<script type="text/javascript" src="index_files/swiper.min.js.download" id="swiper.min-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/slideshow.init.js.download" id="slideshow.init-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/testimonials.init.js.download" id="testimonials.init-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/polyfill.min.js.download" id="polyfill.min-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/imagesloaded.pkgd.js.download" id="imagesloaded.pkgd-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/shuffle.js.download" id="shuffle-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/team.init.js.download" id="team.init-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/latestnews.init.js.download" id="latestnews.init-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/particles.js.download" id="particles-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/particlesjs.init.js.download" id="particlesjs.init-js" defer=""></script>
+<script type="text/javascript" src="index_files/smush-lazy-load.min.js.download" id="smush-lazy-load-js" defer=""></script>
+<script type="text/javascript" src="index_files/wp-embed.min.js.download" id="wp-embed-js" defer=""></script>
+<script data-minify="1" type="text/javascript" src="index_files/main.js.download" id="main-js" defer=""></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded', function () {jQuery(document).ready(function ($) { jQuery('[data-rel^=lightcase]').lightcase({ maxWidth: '100%', maxHeight: '100%', video: { width: '1280', height: '720' } }); });});</script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded', function () {jQuery(document).ready(function ($) { jQuery('[data-rel^=lightcase]').lightcase({ maxWidth: '100%', maxHeight: '100%', video: { width: '1280', height: '720' } }); });});</script>
+
+<script>'use strict';
+var wprRemoveCPCSS = function wprRemoveCPCSS () {
+    var elem;
+    document.querySelector('link[data-rocket-async="style"][rel="preload"]') ? setTimeout(wprRemoveCPCSS, 200) : (elem = document.getElementById('rocket-critical-css')) && 'remove' in elem && elem.remove();
+};
+window.addEventListener ? window.addEventListener('load', wprRemoveCPCSS) : window.attachEvent && window.attachEvent('onload', wprRemoveCPCSS);</script>
+<noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans&#038;display=swap"/>
+    <link rel="stylesheet" id="wp-block-library-css" href="https://fagfolk.net/wp-includes/css/dist/block-library/style.min.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="contact-form-7-css" href="https://fagfolk.net/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.5.6.1" type="text/css" media="all"/>
+    <link rel="stylesheet" id="wpdreams-asl-basic-css" href="https://fagfolk.net/wp-content/plugins/ajax-search-lite/css/style.basic.css?ver=4.10" type="text/css" media="all"/>
+    <link rel="stylesheet" id="wpdreams-ajaxsearchlite-css" href="https://fagfolk.net/wp-content/plugins/ajax-search-lite/css/style-curvy-red.css?ver=4.10" type="text/css" media="all"/>
+    <link rel="stylesheet" id="lightcase-css" href="https://fagfolk.net/wp-content/plugins/gantry5/assets/css/lightcase.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="nucleus-css" href="https://fagfolk.net/wp-content/plugins/gantry5/engines/nucleus/css-compiled/nucleus.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="akuatik_forsiden-css" href="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/css-compiled/akuatik_forsiden.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="wordpress-css" href="https://fagfolk.net/wp-content/plugins/gantry5/engines/nucleus/css-compiled/wordpress.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="style-css" href="https://fagfolk.net/wp-content/themes/rt_akuatik/style.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="font-awesome5-all.min-css" href="https://fagfolk.net/wp-content/plugins/gantry5/assets/css/font-awesome5-all.min.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="font-awesome5-shim.min-css" href="https://fagfolk.net/wp-content/plugins/gantry5/assets/css/font-awesome5-shim.min.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="akuatik-wordpress_forsiden-css" href="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/css-compiled/akuatik-wordpress_forsiden.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="custom_forsiden-css" href="https://fagfolk.net/wp-content/themes/rt_akuatik/custom/css-compiled/custom_forsiden.css?ver=5.8.4" type="text/css" media="all"/>
+    <link rel="stylesheet" id="swiper.min-css" href="https://fagfolk.net/wp-content/themes/rt_akuatik/css/swiper.min.css?ver=5.8.4" type="text/css" media="all"/>
+</noscript>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1653739495 -->
+</body>
+</html>
